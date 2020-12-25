@@ -32,6 +32,14 @@ impl Bcm2835Gpio {
         }
     }
 
+    pub fn read(&self, pin: u8) -> PinVoltage {
+        match unsafe { bindings::bcm2835_gpio_lev(pin) } {
+            0 => PinVoltage::Low,
+            1 => PinVoltage::High,
+            _ => panic!("Unexpected pin voltage"),
+        }
+    }
+
     pub fn write(&mut self, pin: u8, on: PinVoltage) {
         unsafe { bindings::bcm2835_gpio_write(pin, on as u8) }
     }
