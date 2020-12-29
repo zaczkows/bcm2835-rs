@@ -59,7 +59,7 @@ impl Drop for Bcm2835Gpio {
     fn drop(&mut self) {
         let success: bool = unsafe { bindings::bcm2835_close() != 0 };
         if !success {
-            eprintln!("Failed to close bcm2835");
+            log::error!("Failed to close bcm2835");
         }
     }
 }
